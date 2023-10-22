@@ -100,9 +100,9 @@ def __lucasievich_implication__(inf: list, curr_set: list):
     for i in range(len(inf)):
         curr_row = list()
         for k in inf[i]:
-            # order = __find_num_order__(float(curr_set[i][1]), float(k))
-            # curr_row.append(round(min(1.0, 1 - float(curr_set[i][1]) + float(k)), order))
-            curr_row.append(min(float(k), float(curr_set[i][1])))  # is for checking to Gödel example
+            order = __find_num_order__(float(curr_set[i][1]), float(k))
+            curr_row.append(round(min(1.0, 1 - float(curr_set[i][1]) + float(k)), order))
+            # curr_row.append(min(float(k), float(curr_set[i][1])))  # is for checking to Gödel example
             # curr_set example [[a, 0.5], [b,0.4]], so curr_set[0][1] is 0.5.
 
         curr_table.append(curr_row)
