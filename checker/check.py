@@ -1,3 +1,8 @@
+"""
+Лабораторная работа 1
+выполнили Войткус С.А., Лапковский М.А.
+Дата выполнения: 26.10.2023
+"""
 import re
 
 from loguru import logger
@@ -32,7 +37,7 @@ def check_sets(sets: dict):
     return True
 
 
-__sets_pattern__ = '({(<[a-z],((0\\.[0-9]+)|0|1)>,)+?(<[a-z],((0\\.[0-9]+)|0|1)>)})'
+__sets_pattern__ = '({((<[a-z],((0\\.[0-9]+)|0|1)>,)+)?(<[a-z],((0\\.[0-9]+)|0|1)>)})'
 
 
 def __check_set_structure__(curr_set: str):

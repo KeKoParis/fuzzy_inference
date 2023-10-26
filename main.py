@@ -1,3 +1,8 @@
+"""
+Лабораторная работа 1
+выполнили Войткус С.А., Лапковский М.А.
+Дата выполнения: 26.10.2023
+"""
 from loguru import logger
 from prettytable import PrettyTable
 
@@ -52,7 +57,7 @@ def make_pretty_tables(tables: dict, sets: dict):
 def main():
     logger.info("main started")
 
-    data = GetData("input_jsons/input.json")  # data json
+    data = GetData("input_jsons/data.json")  # data json
 
     sets, rules = data.get_data()
     if len(rules) == 0:

@@ -1,3 +1,8 @@
+"""
+Лабораторная работа 1
+выполнили Войткус С.А., Лапковский М.А.
+Дата выполнения: 26.10.2023
+"""
 class InputException(Exception):
     """
     Exception raised for errors in invalid input.

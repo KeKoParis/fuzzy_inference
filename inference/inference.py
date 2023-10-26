@@ -1,3 +1,8 @@
+"""
+Лабораторная работа 1
+выполнили Войткус С.А., Лапковский М.А.
+Дата выполнения: 26.10.2023
+"""
 from loguru import logger
 
 
@@ -13,7 +18,7 @@ def inference(sets: dict, rules: list):
     inferences = dict()
 
     for i in rules:
-        inferences[i] = __classic_implication__(sets, i)
+        inferences[i] = __implication__(sets, i)
 
     keys = inferences.keys()
 
@@ -22,12 +27,12 @@ def inference(sets: dict, rules: list):
     for i in keys:
         sets_names = __find_suitable_sets__(sets, i)
         for j in sets_names:
-            result[j + "," + i] = __lucasievich_implication__(inferences[i], sets[j])
+            result[j + "," + i] = __lucasievich_norma__(inferences[i], sets[j])
 
     return result, inferences
 
 
-def __classic_implication__(sets: dict, rule):
+def __implication__(sets: dict, rule):
     """
     Function resolves classic fuzzy inference.
     :param sets: dict
@@ -49,12 +54,11 @@ def __classic_implication__(sets: dict, rule):
     for i in set_1:
         curr_inference = list()
         for j in set_2:
-            if float(i[1]) == 0:
-                curr_inference.append(1)
-            elif float(i[1]) < float(j[1]):
+            if float(i[1]) < float(j[1]):
                 curr_inference.append(1)
             else:
-                curr_inference.append(float(j[1]))
+                order = __find_num_order__(float(i[1]), float(j[1]))
+                curr_inference.append(round(1 - float(i[1]) + float(j[1]), order))
 
         result.append(curr_inference)
 
@@ -87,9 +91,9 @@ def __find_suitable_sets__(sets: dict, rule: str):
     return set_list
 
 
-def __lucasievich_implication__(inf: list, curr_set: list):
+def __lucasievich_norma__(inf: list, curr_set: list):
     """
-    Function solves Lukasievich implication.
+    Function solves Lukasievich norma.
         min(1, 1 - a + b)
     :param inf:
     :param curr_set:

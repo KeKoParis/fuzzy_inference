@@ -1,3 +1,8 @@
+"""
+Лабораторная работа 1
+выполнили Войткус С.А., Лапковский М.А.
+Дата выполнения: 26.10.2023
+"""
 def format_sets(sets: dict):
     """
     Function a new dictionary more convenient to use.
