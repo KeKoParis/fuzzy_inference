@@ -57,7 +57,7 @@ def make_pretty_tables(tables: dict, sets: dict):
 def main():
     logger.info("main started")
 
-    data = GetData("input_jsons/data.json")  # data json
+    data = GetData("input_jsons/input.json")  # data json
 
     sets, rules = data.get_data()
     if len(rules) == 0:

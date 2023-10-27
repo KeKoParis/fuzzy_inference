@@ -58,8 +58,10 @@ def __implication__(sets: dict, rule):
                 curr_inference.append(1)
             else:
                 order = __find_num_order__(float(i[1]), float(j[1]))
-                curr_inference.append(round(1 - float(i[1]) + float(j[1]), order))
-
+                if float(i[1]) < float(j[1]):
+                    curr_inference.append(1)
+                else:
+                    curr_inference.append(round(1 - float(i[1]) + float(j[1]), order))
         result.append(curr_inference)
 
     return result
@@ -94,7 +96,7 @@ def __find_suitable_sets__(sets: dict, rule: str):
 def __lucasievich_norma__(inf: list, curr_set: list):
     """
     Function solves Lukasievich norma.
-        min(1, 1 - a + b)
+        min(0, a + b - 1)
     :param inf:
     :param curr_set:
     :return curr_table:
@@ -105,7 +107,7 @@ def __lucasievich_norma__(inf: list, curr_set: list):
         curr_row = list()
         for k in inf[i]:
             order = __find_num_order__(float(curr_set[i][1]), float(k))
-            curr_row.append(round(min(1.0, 1 - float(curr_set[i][1]) + float(k)), order))
+            curr_row.append(round(max(0.0, float(curr_set[i][1]) + float(k) - 1), order))
             # curr_row.append(min(float(k), float(curr_set[i][1])))  # is for checking to Gödel example
             # curr_set example [[a, 0.5], [b,0.4]], so curr_set[0][1] is 0.5.
 
