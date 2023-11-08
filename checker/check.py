@@ -18,10 +18,10 @@ def check_sets(sets: dict):
     """
     keys = list(sets.keys())
 
-    for i in keys:
-        if ord(i) > 122 or ord(i) < 97:
-            logger.error(InputException('Set "' + i + '"'))
-            return False
+    # for i in keys:
+    #     if ord(i) > 122 or ord(i) < 97:
+    #         logger.error(InputException('Set "' + i + '"'))
+    #         return False
 
     for i in keys:
         curr_set: str = sets[i]

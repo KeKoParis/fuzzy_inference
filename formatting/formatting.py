@@ -3,6 +3,8 @@
 выполнили Войткус С.А., Лапковский М.А.
 Дата выполнения: 26.10.2023
 """
+
+
 def format_sets(sets: dict):
     """
     Function a new dictionary more convenient to use.
@@ -36,5 +38,5 @@ def format_rules(rules: list):
     :return:
     """
     for i in range(len(rules)):
-        rules[i] = rules[i][:1] + rules[i][rules[i].find('>')+1:]
+        rules[i] = rules[i][:1] + rules[i][rules[i].find('>') + 1:]
         rules[i] = rules[i][:2]

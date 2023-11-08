@@ -3,6 +3,7 @@
 выполнили Войткус С.А., Лапковский М.А.
 Дата выполнения: 26.10.2023
 """
+
 from loguru import logger
 from prettytable import PrettyTable
 
@@ -25,7 +26,7 @@ def str_result(result: list, curr_set: list):
             if float(result[k][j]) > float(curr_value):
                 curr_value = float(result[k][j])
 
-        string += "(" + curr_set[j][0] + ',' + str(curr_value) + "),"
+        string += "<" + curr_set[j][0] + ',' + str(curr_value) + ">,"
 
     string = "{" + string[:-1] + "}"
 
@@ -54,12 +55,20 @@ def make_pretty_tables(tables: dict, sets: dict):
     return formatted_tables
 
 
+def check_duplicate(sets_keys, sets, curr_str):
+    for j in sets_keys:
+        if curr_str == sets[j]:
+            return False
+    return True
+
+
 def main():
     logger.info("main started")
 
-    data = GetData("input_jsons/input.json")  # data json
-
+    data = GetData("input_jsons/data.json")  # data json
+    sets = dict()
     sets, rules = data.get_data()
+
     if len(rules) == 0:
         return
 
@@ -71,27 +80,52 @@ def main():
 
     logger.info("Input data is correct")
 
-    formatted_sets = format_sets(sets)
-    formatted_rules = list(rules)
-    format_rules(formatted_rules)
+    curr_sets = list(sets)
+    while True:
+        formatted_sets = format_sets(sets)
+        formatted_rules = list(rules)
+        format_rules(formatted_rules)
 
-    result, inferences = inf.inference(formatted_sets, formatted_rules)
+        result, inferences = inf.inference(formatted_sets, formatted_rules)
 
-    formatted_inferences = make_pretty_tables(inferences, formatted_sets)
-    formatted_results = make_pretty_tables(result, formatted_sets)
+        formatted_inferences = make_pretty_tables(inferences, formatted_sets)
+        formatted_results = make_pretty_tables(result, formatted_sets)
 
-    logger.info("Tables created")
+        logger.info("Tables created")
 
-    for i in formatted_inferences:
-        print(i)
+        for i in formatted_inferences:
+            print(i)
 
-    for i in formatted_results:
-        print(i)
+        for i in formatted_results:
+            print(i)
 
-    result_keys = result.keys()
+        result_keys = result.keys()
 
-    for i in result_keys:
-        print(str_result(result[i], formatted_sets[i[-1]]))
+        for i in result_keys:
+            print(str_result(result[i], formatted_sets[i[-1]]))
+
+        sets_keys = set(sets.keys())
+
+        # for i in result_keys:
+        #     curr_str = str_result(result[i], formatted_sets[i[-1]])
+        #     for j in sets_keys:
+        #         if curr_str == sets[j]:
+        #             return
+
+        for i in result_keys:
+            a = 'a'
+            while str(a) in sets_keys:
+                a += chr(ord(a[-1]) + 1)
+            if check_duplicate(sets_keys, sets, str_result(result[i], formatted_sets[i[-1]])):
+                sets[a] = str_result(result[i], formatted_sets[i[-1]])
+                sets_keys = sets.keys()
+
+        if len(curr_sets) == len(sets):
+            return
+
+        curr_sets = dict(sets)
+        print(len(curr_sets))
+        print("\n*********NEXT LEVEL*********\n")
 
 
 if __name__ == "__main__":
