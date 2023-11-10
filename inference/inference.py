@@ -1,6 +1,7 @@
 """
 Лабораторная работа 1
 выполнили Войткус С.А., Лапковский М.А.
+норма Лукасевича
 Дата выполнения: 26.10.2023
 """
 from loguru import logger
@@ -44,24 +45,14 @@ def __implication__(sets: dict, rule):
 
     result = list()
 
-    """
-    it finds classic fuzzy implication
-        if first less than second it would be 1;
-        if the first is 0 it would be also 1 
-        (can be the situation when both are equal to 0)
-        if first more than second it would be the second.
-    """
     for i in set_1:
         curr_inference = list()
         for j in set_2:
             if float(i[1]) < float(j[1]):
                 curr_inference.append(1)
             else:
-                order = __find_num_order__(float(i[1]), float(j[1]))
-                if float(i[1]) < float(j[1]):
-                    curr_inference.append(1)
-                else:
-                    curr_inference.append(round(1 - float(i[1]) + float(j[1]), order))
+                # order = __find_num_order__(float(i[1]), float(j[1]))
+                curr_inference.append(1 - float(i[1]) + float(j[1]))
         result.append(curr_inference)
 
     return result
@@ -106,8 +97,8 @@ def __lucasievich_norma__(inf: list, curr_set: list):
     for i in range(len(inf)):
         curr_row = list()
         for k in inf[i]:
-            order = __find_num_order__(float(curr_set[i][1]), float(k))
-            curr_row.append(round(max(0.0, float(curr_set[i][1]) + float(k) - 1), order))
+            # order = __find_num_order__(float(curr_set[i][1]), float(k))
+            curr_row.append(max(0.0, float(curr_set[i][1]) + float(k) - 1))
             # curr_row.append(min(float(k), float(curr_set[i][1])))  # is for checking to Gödel example
             # curr_set example [[a, 0.5], [b,0.4]], so curr_set[0][1] is 0.5.
 
